@@ -1,0 +1,532 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Calculadora Positano Normal {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menuLateral-2.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cardCalculos.css')}}">
+{% endblock %}
+
+{% block body %}
+<!-- cSpell:disable -->
+<style>
+    .link-cubos-chimeneas {
+        color: #b9aa95 !important;
+        font-weight: 700;
+    }
+</style>
+<!-- cSpell:enable -->
+
+<div class="margen-contenido">
+    <div class="container">
+        <!-- SECCIÓN TITULO PAGINA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-4 col-lg-5 col-md-5">
+                    <h2>Cubos o Chimeneas</h2>
+                </div>
+                <div class="col-12 col-xl-8 col-lg-7 col-md-7">
+                    <hr>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA CALCULADORA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12 my-5">
+                    <div class="card card-custom shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-auto">
+                                    Ingresa los datos solicitados para hacer el calculo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mármol</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largoMarmol" class="form-label">Ingresa el Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largoMarmol"
+                                            placeholder="cm" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoarmol" class="form-label">Ingresa el Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoarmol"
+                                            placeholder="cm" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoMarmol" class="form-label">Ingresa el Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoMarmol"
+                                            placeholder="cm" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadradoMarmol" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadradoMarmol"
+                                            placeholder="m²" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioMarmol" class="form-label">Elige el tipo de mármol</label>
+                                        <select class="form-select input-custom" id="precioMarmol"
+                                            oninput="calcularCC()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            <!-- cSpell:disable -->
+                                            {% for marmol in marmoles | sort(attribute='nombre_material_marmol') %}
+                                            <option value="{{ marmol.precio_marmol }}">
+                                                {{ marmol.nombre_material_marmol }} | {{ marmol.tipo_marmol }} | ${{
+                                                marmol.precio_marmol }}
+                                            </option>
+                                            {% endfor %}
+                                            <!-- cSpell:enable -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorSuperficieMarmol" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorSuperficieMarmol"
+                                            placeholder="$" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mano de Obra</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroLinealManoObra" class="form-label d-flex">Metro lineal</label>
+                                        <input type="number" class="form-control input-custom" id="metroLinealManoObra"
+                                            placeholder="cm" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioManoObra" class="form-label">Ingresa el Precio</label>
+                                        <input type="number" class="form-control input-custom" id="precioManoObra"
+                                            placeholder="$" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorManoObra" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorManoObra" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Estructura</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largoEstructura" class="form-label d-flex">Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largoEstructura"
+                                            placeholder="cm" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoEstructura" class="form-label">Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoEstructura"
+                                            placeholder="cm" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoEstructura" class="form-label">Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoEstructura"
+                                            placeholder="cm" oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadEstructura" class="form-label">Ingresa la Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadEstructura"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorEstructura" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorEstructura" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Zócalo de Bronce</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadZocaloBronce" class="form-label">Ingresa la Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadZocaloBronce"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioZocaloBronce" class="form-label">Precio</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="precioZocaloBronce" placeholder="$" value="250000"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorZocaloBronce" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorZocaloBronce" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>LEDs</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadLEDs" class="form-label d-flex">Ingresa la Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadLEDs"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioLEDs" class="form-label">Precio</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="precioLEDs" placeholder="$" value="447000" oninput="calcularCC()"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorLEDs" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorLEDs" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Ruedas</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadRuedas" class="form-label d-flex">Ingresa la
+                                            Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadRuedas"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioRuedas" class="form-label">Precio</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="precioRuedas" placeholder="$" value="8000" oninput="calcularCC()"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorRuedas" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorRuedas" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Quemadores</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadQuemadores" class="form-label d-flex">Ingresa la
+                                            Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadQuemadores"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioQuemadores" class="form-label">Precio</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="precioQuemadores" placeholder="$" value="137000" oninput="calcularCC()"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorQuemadores" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorQuemadores" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Bandeja de Quemador</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="cantidadBandeja" class="form-label d-flex">Ingresa la
+                                            Cantidad</label>
+                                        <input type="number" class="form-control input-custom" id="cantidadBandeja"
+                                            placeholder="Nº" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioBandeja" class="form-label">Precio</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="precioBandeja" placeholder="$" value="163000" oninput="calcularCC()"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorBandeja" class="form-label">Valor</label>
+                                        <input class="form-control input-custom" id="valorBandeja" placeholder="$"
+                                            oninput="calcularCC()" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Otros</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="armado" class="form-label">Ingresa el valor Armado</label>
+                                        <input type="number" class="form-control input-custom" id="armado"
+                                            placeholder="$" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="transporteYExtras" class="form-label">Ingresa Transporte y
+                                            Extras</label>
+                                        <input type="number" class="form-control input-custom" id="transporteYExtras"
+                                            placeholder="$" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="instalacion" class="form-label">Ingresa valor de
+                                            Instalación</label>
+                                        <input type="number" class="form-control input-custom" id="instalacion"
+                                            placeholder="$" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeGanancia" class="form-label">Ingresa Porcentaje
+                                            Ganancia</label>
+                                        <input type="number" class="form-control input-custom validarPorcentaje"
+                                            id="PorcentajeGanancia" value="55" placeholder="%" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeCredito" class="form-label">Ingresa Porcentaje
+                                            Crédito</label>
+                                        <input type="number" class="form-control input-custom" id="PorcentajeCredito"
+                                            value="5" placeholder="%" oninput="calcularCC()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12 fijar-alto my-xl-5 my-lg-5 my-md-0 my-sm-0">
+                    <div class="card card-custom shadow fijar">
+                        <div class="card-header">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-12 col-xl-12 col-lg-12 col-md-9 col-sm-8">
+                                    Resultados Cubos o Chimeneas
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-12 col-md-3 col-sm-4">
+                                    <div class="form-check form-switch check-custom">
+                                        <label class="form-check-label" for="showInputs">Ver Ocultos</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="showInputs"
+                                            onchange="mostrarInputs()">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-xl-6 col-lg-12 col-md-3 col-sm-4">
+                                    <div class="form-check form-switch check-custom">
+                                        <label class="form-check-label" for="editInputs">Habilitar Ediciones</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="editInputs"
+                                            onchange="habilitarInput()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="CosteNeto" class="form-label">Precio Coste Neto</label>
+                                        <input class="form-control input-custom-resultado" id="CosteNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="ganancia" class="form-label">Valor de Ganancia</label>
+                                        <input class="form-control input-custom-resultado" id="ganancia" placeholder="$"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioNeto" class="form-label">Precio del valor Neto</label>
+                                        <input class="form-control input-custom-resultado" id="precioNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioContado" class="form-label">Precio valor Contado</label>
+                                        <input class="form-control input-custom-resultado" id="precioContado"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioCredito" class="form-label">Precio valor Crédito</label>
+                                        <input class="form-control input-custom-resultado" id="precioCredito"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="conRedondeo" class="form-label">Precio Redondeado</label>
+                                        <input class="form-control input-custom-resultado" id="conRedondeo"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/calcularCC.js')}}"></script>
+<script src="{{ url_for('static', filename='js/validarPorcentaje.js')}}"></script>
+<script src="{{ url_for('static', filename='js/habilitarInputs.js')}}"></script>
+{% endblock %}

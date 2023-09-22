@@ -1,0 +1,219 @@
+{% extends 'base-1.html' %}
+
+{% block title %} inicio Proveedores {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/customInicioProveedores.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <!-- MENSAJE DE INICIO PROVEEDORES -->
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-auto text-center">
+                <h1>¡Hola! Estas en el inicio de <b>Proveedores</b></h1>
+                <h4>Escoge una de las opciones para visitar la sección que deseas.</h4>
+                <i class="bi bi-arrow-down-circle-fill fs-3"></i>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-11 col-xl-5 col-lg-6 col-md-7 col-sm-8">
+                <img class="img-fluid shadow" src="{{ url_for('static', filename='img/proveedores-2.jpg') }}"
+                    alt="Proveedores">
+            </div>
+        </div>
+    </section>
+
+    <!-- ACORDEÓN PARA LINKS DE PROVEEDORES -->
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="accordion shadow" id="accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false">
+                                Proveedores de Mármol
+                            </button>
+                        </h2>
+
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Presenta una lista de empresas que ofrecen mármol como materia
+                                    prima
+                                    para la fabricación
+                                    de diversos productos.</p>
+                                <a href="{{ url_for('proveedoMrarmol') }}" type="button"
+                                    class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false">
+                                Proveedores de Cristal
+                            </button>
+                        </h2>
+
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Muestra una selección de empresas que suministran cristales como
+                                    material base para su uso en diferentes aplicaciones.</p>
+                                <a href="{{ url_for('proveedorCristal') }}" type="button"
+                                    class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false">
+                                Proveedor Mano de obra Mármol
+                            </button>
+                        </h2>
+
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Empresas que ofrecen servicios de fabricación de muebles y
+                                    productos
+                                    personalizados utilizando mármol como material principal.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false">
+                                Proveedor de Estructura Metálica
+                            </button>
+                        </h2>
+
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Destaca empresas que se especializan en la creación y suministro
+                                    de
+                                    estructuras metálicas para diversas aplicaciones industriales y de construcción.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item"hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFive" aria-expanded="false">
+                                Proveedor de Quemadores
+                            </button>
+                        </h2>
+
+                        <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">presenta empresas que ofrecen quemadores de calidad y con
+                                    certificación para su uso en
+                                    chimeneas y sistemas de calefacción.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item"hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseSix" aria-expanded="false">
+                                Proveedor de Traslado
+                            </button>
+                        </h2>
+
+                        <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Destaca empresas que ofrecen servicios de transporte especializado
+                                    para mudanzas y el
+                                    traslado seguro de muebles y enseres domésticos.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item"hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseSeven" aria-expanded="false">
+                                Proveedor de Alfombras
+                            </button>
+                        </h2>
+
+                        <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p class="p-collapse">Empresas que ofrecen una variedad de opciones y servicios
+                                    relacionados
+                                    con alfombras,
+                                    desde la venta hasta la instalación y el mantenimiento.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item"hidden>
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseEight" aria-expanded="false">
+                                Proveedor The Woods</b>
+                            </button>
+                        </h2>
+
+                        <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                            <div class="accordion-body">
+                                <p>Ofrece una selección de productos relacionados con la madera y la naturaleza, desde
+                                    muebles y decoración hasta elementos de construcción y accesorios para el hogar.</p>
+                                <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                    IR
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+</div>
+
+{% endblock %}
+
+{% block js %}{% endblock %}

@@ -1,0 +1,332 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Calculadora Positano Normal {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menuLateral-2.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cardCalculos.css')}}">
+{% endblock %}
+
+{% block body %}
+<!-- cSpell:disable -->
+<style>
+    .link-psitano-normal {
+        color: #b9aa95 !important;
+        font-weight: 700;
+    }
+</style>
+<!-- cSpell:enable -->
+
+<div class="margen-contenido">
+    <div class="container">
+        <!-- SECCIÓN TITULO PAGINA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-4 col-lg-5 col-md-5">
+                    <h2>Positano Normal</h2>
+                </div>
+                <div class="col-12 col-xl-8 col-lg-7 col-md-7">
+                    <hr>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA CALCULADORA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12 my-5">
+                    <div class="card card-custom shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-auto">
+                                    Ingresa los datos solicitados para hacer el calculo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Cristal</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largoCristal" class="form-label">Ingresa el Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largoCristal"
+                                            placeholder="cm" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoCristal" class="form-label">Ingresa el Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoCristal"
+                                            placeholder="cm" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoCristal" class="form-label">Ingresa el Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoCristal"
+                                            placeholder="cm" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadradoCristal" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadradoCristal"
+                                            placeholder="m²" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioCristal" class="form-label">Elige el tipo de Cristal</label>
+                                        <select class="form-select input-custom" id="precioCristal"
+                                            oninput="calcularPN()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            {% for cristal in cristales | sort(attribute='nombre_material_cristal') %}
+                                            <option value="{{ cristal.precio_cristal }}">{{
+                                                cristal.nombre_material_cristal
+                                                }} | {{ cristal.tipo_cristal }} | ${{ cristal.precio_cristal }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorSuperficieCristal" class="form-label">Valor Superficie</label>
+                                        <input class="form-control input-custom" id="valorSuperficieCristal"
+                                            placeholder="$" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="manoObraCristal" class="form-label d-flex">Mano de obra</label>
+                                        <input type="number" class="form-control input-custom habilitarInput"
+                                            id="manoObraCristal" placeholder="$" value="60000" disabled
+                                            oninput="calcularPN()">
+                                        <div class="text-start form-check form-switch check-custom">
+                                            <label class="form-check-label" for="editInputs">Editar</label>
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="editInputs" onchange="habilitarInput()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mármol</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largoMarmol" class="form-label">Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largoMarmol"
+                                            placeholder="cm" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoMarmol" class="form-label">Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoMarmol"
+                                            placeholder="cm" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoMarmol" class="form-label">Ingresa el Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoMarmol"
+                                            placeholder="cm" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadradoMarmol" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadradoMarmol"
+                                            placeholder="m²" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioMarmol" class="form-label">Elige el tipo de mármol</label>
+                                        <select class="form-select input-custom" id="precioMarmol"
+                                            oninput="calcularPN()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            <!-- cSpell:disable -->
+                                            {% for marmol in marmoles | sort(attribute='nombre_material_marmol') %}
+                                            <option value="{{ marmol.precio_marmol }}">
+                                                {{ marmol.nombre_material_marmol }} | {{ marmol.tipo_marmol }} | ${{
+                                                marmol.precio_marmol }}
+                                            </option>
+                                            {% endfor %}
+                                            <!-- cSpell:enable -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorSuperficieMarmol" class="form-label">Valor Superficie</label>
+                                        <input class="form-control input-custom" id="valorSuperficieMarmol"
+                                            placeholder="$" disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="manoObraMarmol" class="form-label d-flex">Mano de obra</label>
+                                        <input class="form-control input-custom" id="manoObraMarmol" placeholder="$"
+                                            disabled oninput="calcularPN()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Otros</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorTransporte" class="form-label">Ingresa precio
+                                            Transporte</label>
+                                        <input type="number" class="form-control input-custom" id="valorTransporte"
+                                            placeholder="$" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeGanancia" class="form-label">Ingresa Porcentaje
+                                            Ganancia</label>
+                                        <input type="number" class="form-control input-custom validarPorcentaje"
+                                            id="PorcentajeGanancia" value="55" placeholder="%" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeCredito" class="form-label">Ingresa Porcentaje
+                                            Crédito</label>
+                                        <input type="number" class="form-control input-custom" id="PorcentajeCredito"
+                                            value="5" placeholder="%" oninput="calcularPN()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12 fijar-alto my-xl-5 my-lg-5 my-md-0 my-sm-0">
+                    <div class="card card-custom shadow fijar">
+                        <div class="card-header">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-12 col-xl-7 col-lg-12 col-md-9 col-sm-8">
+                                    Resultados Positano Normal
+                                </div>
+                                <div class="col-12 col-xl-5 col-lg-12 col-md-3 col-sm-4">
+                                    <div class="form-check form-switch check-custom">
+                                        <label class="form-check-label" for="showInputs">Ver Ocultos</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="showInputs"
+                                            onchange="mostrarInputs()">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="CosteNeto" class="form-label">Precio Coste Neto</label>
+                                        <input class="form-control input-custom-resultado" id="CosteNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="ganancia" class="form-label">Valor de Ganancia</label>
+                                        <input class="form-control input-custom-resultado" id="ganancia" placeholder="$"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioNeto" class="form-label">Precio del valor Neto</label>
+                                        <input class="form-control input-custom-resultado" id="precioNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioContado" class="form-label">Precio valor Contado</label>
+                                        <input class="form-control input-custom-resultado" id="precioContado"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioCredito" class="form-label">Precio valor Crédito</label>
+                                        <input class="form-control input-custom-resultado" id="precioCredito"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="conRedondeo" class="form-label">Precio Redondeado</label>
+                                        <input class="form-control input-custom-resultado" id="conRedondeo"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/calcularPN.js')}}"></script>
+<script src="{{ url_for('static', filename='js/validarPorcentaje.js')}}"></script>
+<script src="{{ url_for('static', filename='js/habilitarInputs.js')}}"></script>
+{% endblock %}

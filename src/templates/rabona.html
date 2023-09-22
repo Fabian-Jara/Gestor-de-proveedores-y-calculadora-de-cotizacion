@@ -1,0 +1,322 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Calculadora Positano Normal {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menuLateral-2.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cardCalculos.css')}}">
+{% endblock %}
+
+{% block body %}
+<!-- cSpell:disable -->
+<style>
+    .link-rabona {
+        color: #b9aa95 !important;
+        font-weight: 700;
+    }
+</style>
+<!-- cSpell:enable -->
+
+<div class="margen-contenido">
+    <div class="container">
+        <!-- SECCIÓN TITULO PAGINA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-4 col-lg-5 col-md-5">
+                    <h2>Rabona</h2>
+                </div>
+                <div class="col-12 col-xl-8 col-lg-7 col-md-7">
+                    <hr>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA CALCULADORA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12 my-5">
+                    <div class="card card-custom shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-auto">
+                                    Ingresa los datos solicitados para hacer el calculo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mármol Cubierta</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largoMarmolCubierta" class="form-label">Ingresa el Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largoMarmolCubierta"
+                                            placeholder="cm" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoMarmolCubierta" class="form-label">Ingresa el Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoMarmolCubierta"
+                                            placeholder="cm" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoMarmolCubierta" class="form-label">Ingresa el Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoMarmolCubierta"
+                                            placeholder="cm" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadradoMarmolCubierta" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadradoMarmolCubierta"
+                                            placeholder="m²" disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioMarmolCubierta" class="form-label">Elige el tipo de Mármol</label>
+                                        <select class="form-select input-custom" id="precioMarmolCubierta"
+                                            oninput="calcularRa()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            <!-- cSpell:disable -->
+                                            {% for marmol in marmoles | sort(attribute='nombre_material_marmol') %}
+                                            <option value="{{ marmol.precio_marmol }}">
+                                                {{ marmol.nombre_material_marmol }} | {{ marmol.tipo_marmol }} | ${{
+                                                marmol.precio_marmol }}
+                                            </option>
+                                            {% endfor %}
+                                            <!-- cSpell:enable -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorSuperficieMarmolCubierta" class="form-label">Valor Superficie</label>
+                                        <input class="form-control input-custom" id="valorSuperficieMarmolCubierta"
+                                            placeholder="$" disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="manoObraMarmolCubierta" class="form-label d-flex">Mano de obra</label>
+                                        <input class="form-control input-custom habilitarInput"
+                                            id="manoObraMarmolCubierta" placeholder="$" disabled
+                                            oninput="calcularRa()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mármol Patas</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="anchoMarmolPatas" class="form-label">Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="anchoMarmolPatas"
+                                            placeholder="cm" disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="altoMarmolPatas" class="form-label">Ingresa el Alto</label>
+                                        <input type="number" class="form-control input-custom" id="altoMarmolPatas"
+                                            placeholder="cm" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadradoMarmolPatas" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadradoMarmolPatas"
+                                            placeholder="m²" disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioMarmolPatas" class="form-label">Elige el tipo de mármol</label>
+                                        <select class="form-select input-custom" id="precioMarmolPatas"
+                                            oninput="calcularRa()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            <!-- cSpell:disable -->
+                                            {% for marmol in marmoles | sort(attribute='nombre_material_marmol') %}
+                                            <option value="{{ marmol.precio_marmol }}">
+                                                {{ marmol.nombre_material_marmol }} | {{ marmol.tipo_marmol }} | ${{
+                                                marmol.precio_marmol }}
+                                            </option>
+                                            {% endfor %}
+                                            <!-- cSpell:enable -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorSuperficieMarmolPatas" class="form-label">Valor Superficie</label>
+                                        <input class="form-control input-custom" id="valorSuperficieMarmolPatas"
+                                            placeholder="$" disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="manoObraMarmolPatas" class="form-label d-flex">Mano de obra</label>
+                                        <input class="form-control input-custom" id="manoObraMarmolPatas" placeholder="$"
+                                            disabled oninput="calcularRa()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Otros</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="valorTransporte" class="form-label">Ingresa precio
+                                            Transporte</label>
+                                        <input type="number" class="form-control input-custom" id="valorTransporte"
+                                            placeholder="$" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeGanancia" class="form-label">Ingresa Porcentaje
+                                            Ganancia</label>
+                                        <input type="number" class="form-control input-custom validarPorcentaje"
+                                            id="PorcentajeGanancia" value="55" placeholder="%" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeCredito" class="form-label">Ingresa Porcentaje
+                                            Crédito</label>
+                                        <input type="number" class="form-control input-custom" id="PorcentajeCredito"
+                                            value="5" placeholder="%" oninput="calcularRa()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12 fijar-alto my-xl-5 my-lg-5 my-md-0 my-sm-0">
+                    <div class="card card-custom shadow fijar">
+                        <div class="card-header">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-12 col-xl-7 col-lg-12 col-md-9 col-sm-8">
+                                    Resultados Rabona
+                                </div>
+                                <div class="col-12 col-xl-5 col-lg-12 col-md-3 col-sm-4">
+                                    <div class="form-check form-switch check-custom">
+                                        <label class="form-check-label" for="showInputs">Ver Ocultos</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="showInputs"
+                                            onchange="mostrarInputs()">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="CosteNeto" class="form-label">Precio Coste Neto</label>
+                                        <input class="form-control input-custom-resultado" id="CosteNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="ganancia" class="form-label">Valor de Ganancia</label>
+                                        <input class="form-control input-custom-resultado" id="ganancia" placeholder="$"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioNeto" class="form-label">Precio del valor Neto</label>
+                                        <input class="form-control input-custom-resultado" id="precioNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioContado" class="form-label">Precio valor Contado</label>
+                                        <input class="form-control input-custom-resultado" id="precioContado"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioCredito" class="form-label">Precio valor Crédito</label>
+                                        <input class="form-control input-custom-resultado" id="precioCredito"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="conRedondeo" class="form-label">Precio Redondeado</label>
+                                        <input class="form-control input-custom-resultado" id="conRedondeo"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/calcularRa.js')}}"></script>
+<script src="{{ url_for('static', filename='js/validarPorcentaje.js')}}"></script>
+<script src="{{ url_for('static', filename='js/habilitarInputs.js')}}"></script>
+{% endblock %}

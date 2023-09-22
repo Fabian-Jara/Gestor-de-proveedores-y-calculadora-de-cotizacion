@@ -1,0 +1,158 @@
+/* MUESTRA EL MENU LATERAL PARA PROVEEDORES*/
+.menu-lateral-1 {
+    display: block;
+}
+
+/* ADAPTA EL CONTENIDO AL ANCHO DEL MENU LATERAL */
+.margen-contenido {
+    margin-left: calc(100vw - 80vw);
+}
+
+.pie-pagina{
+    margin-left: calc(100vw - 80vw);
+}
+
+/* ESTILOS PARA EL MODAL*/
+.modal-header{
+    background-color: #bfa580;
+    color: white;
+}
+
+.modal-body{
+    background-color: #f0f0f0;
+    border-radius: 0;
+}
+
+.modal-body input{
+    font-size: 10pt;
+    border-radius: 0;
+    border: 0;
+    border-bottom: solid 2px;
+}
+
+.modal-body input:focus{
+    background-color: #d9cfc4;
+}
+
+.modal-body select{
+    font-size: 10pt;
+    border-radius: 0;
+    border: 0;
+    border-bottom: solid 2px;
+}
+
+.modal-body select:focus{
+    background-color: #d9cfc4;
+}
+
+.modal-body label{
+    font-size: 12pt;
+}
+
+.modal-footer{
+    background-color: #bfa580;
+}
+
+.modal-content{
+    border-radius: 20px;
+    border: solid none;
+}
+
+
+/* ESTILOS PARA EL BOTON AGREGAR NUEVO*/
+.btn-custom {
+    border: solid 2px black;
+    font-size: 10pt;
+}
+
+.btn-custom:hover {
+    border: solid 2px #bfa580;
+    background-color: #bfa580;
+}
+
+/* ESTILOS PARA LA TABLA */
+.btn-tabla {
+    border: solid 3px;
+    font-size: 9pt;
+}
+
+.card-fondo-table {
+    background-color: transparent;
+    border: none;
+}
+
+.table {
+    background-color: white;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.page-link {
+    color: black !important;
+}
+
+.page-item.active .page-link {
+    color: #fff !important;
+    background-color: #b9aa95;
+    border-color: #b9aa95;
+}
+
+.page-item:hover .page-link {
+    color: #fff !important;
+    background-color: #b9aa95;
+    border-color: #b9aa95;
+}
+
+.page-item.disabled .page-link {
+    color: gray !important;
+}
+
+.fijar-alto{
+    max-height: 1400px;
+}
+
+.fijar{
+    background-color: #b9aa95;
+    color: white;
+    position: sticky;
+    top: 80px;
+    z-index: 1;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
+    content: "🔽" !important;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
+    content: "🔼" !important;
+}
+
+.id-td{
+    min-width: 2rem !important;
+}
+
+@media(max-width:991px) {
+
+    .margen-contenido {
+        margin-left: 0;
+    }
+    .pie-pagina{
+        margin-left: 0;
+    }
+    
+}
+
+@media(max-width:347px) {
+
+    .dataTables_filter{
+        font-size: 9pt;
+    }
+    .dataTables_filter input{
+        font-size: 9pt;
+    }
+    
+}

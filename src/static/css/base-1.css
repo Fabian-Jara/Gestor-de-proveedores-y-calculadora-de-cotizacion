@@ -1,0 +1,90 @@
+/* MARGEN SUPEROR PARA EL BODY*/
+body {
+    margin-top: 7rem;
+    background-color: #f0f0f0;
+}
+
+/* OCULTA EL ICONO DE IMCREMENTO Y DECREMENTO DEL UN INPUT TIPO NUMERO */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ESTILOS PARA MENU SUPERIOR */
+nav img {
+    width: 100px;
+}
+
+.container-fluid {
+    padding: 5px 100px 5px 100px;
+}
+
+.navbar-toggler {
+    border: 0px !important;
+}
+
+.navbar-toggler i {
+    font-size: 24pt;
+    color: #CCCCCC;
+}
+
+.dropdown-menu {
+    background-color: #b9aa95;
+}
+
+li a {
+    color: white !important;
+    font-size: 14pt;
+}
+
+li a:hover {
+    color: #d9cfc4 !important;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    color: black !important;
+    background-color: white !important
+}
+
+/* FIN DE ESTILOS PARA MENU SUPERIOR*/
+
+/* ESTILOS PARA CUERPO */
+
+/* ESTILOS PARA OCULTA EL MUNU LATERAL*/
+.menu-lateral-1 {
+    display: none;
+}
+
+.menu-lateral-2 {
+    display: none;
+}
+/* FIN DE ESTILOS PARA OCULTA EL MUNU LATERAL*/
+
+/* ESTILOS PARA EL PIE DE PAGINA */
+.pie-pagina {
+    background-color: black;
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+    margin-top: 4rem;
+}
+/* FIN DE ESTILOS PARA EL PIE DE PAGINA*/
+
+hr {
+    border: 2px solid #bfa580;
+    height: 2px;
+    background-color: #bfa580;
+}
+
+
+@media(max-width:991px) {
+
+    /* ESTILOS PARA MENU SUPERIRO */
+    .container-fluid {
+        padding: 5px 20px 5px 20px;
+    }
+
+    /* FIN DE ESTILOS PARA MENU SUPERIRO */
+}

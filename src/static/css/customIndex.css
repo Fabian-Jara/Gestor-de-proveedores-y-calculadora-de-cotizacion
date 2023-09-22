@@ -1,0 +1,95 @@
+/* ESTILOS PARA EL SALUDO DE BIENVENIDA */
+.img-saludo {
+    border-radius: 100px;
+    background-color: transparent;
+}
+
+/* ESTILOS PARA LAS CARDs DE INICIO */
+.card {
+    border-radius: 20px 20px 25px 25px;
+    background-color: #d9cfc4;
+    border: solid 0;
+}
+
+.contenedor-card-img {
+    max-width: 400px;
+    max-height: 200px;
+    border-radius: 20px 20px 20px 20px !important;
+    overflow: hidden;
+}
+
+.carta img {
+    width: 400px;
+    height: 200px;
+    border-radius: 20px 20px 20px 20px !important;
+    -webkit-transition: transform 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
+.carta:hover img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    color: white;
+}
+
+.carta {
+    text-decoration: none;
+    color: white;
+    font-size: 12pt;
+}
+
+.carta:hover {
+    color: white;
+}
+
+.card-footer {
+    padding: 15px;
+    border: solid 0;
+    background-color: #bfa580;
+    height: 110px;
+    border-radius: 20px !important;
+}
+
+.card .btn {
+    border: solid 2px white;
+    border-radius: 20px;
+    width: 90%;
+}
+
+/* ESTILOS PARA ACORDEON DE PROVEEDORES*/
+.accordion-button {
+    font-size: 12pt;
+    height: 43px;
+}
+
+.accordion-button:focus {
+    border-color: #d9cfc4;
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: #d9cfc4;
+}
+
+.accordion p{
+    font-size: 11pt;
+}
+
+.accordion .btn{
+    font-size: 10pt;
+    width: 20%;
+}
+
+.accordion .btn:hover{
+    background-color: #bfa580;
+    border-color: #bfa580;
+}
+
+/* RESPONSIVO */
+@media(max-width:324px) {
+    .card-title {
+        font-size: 12pt !important;
+    }
+    
+}

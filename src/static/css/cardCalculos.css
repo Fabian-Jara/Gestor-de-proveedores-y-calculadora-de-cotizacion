@@ -1,0 +1,92 @@
+/* MUESTRA EL MENU LATERAL PARA CALCULADORA COMERCIAL*/
+.menu-lateral-2 {
+    display: block;
+}
+
+/* ADAPTA EL CONTENIDO AL ANCHO DEL MENU LATERAL */
+.margen-contenido {
+    margin-left: calc(100vw - 80vw);
+}
+
+.pie-pagina {
+    margin-left: calc(100vw - 80vw);
+}
+
+/* ESTILOS PARA CARD CALCULOS */
+.card-custom {
+    border: none;
+    border-radius: 20px;
+}
+
+.card-header {
+    background-color: #b9aa95;
+    border-radius: 20px !important;
+    color: white;
+}
+
+.card-body {
+    margin-top: 1rem;
+}
+
+.input-custom {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid 2px;
+    font-size: 10pt;
+}
+
+.input-custom:focus {
+    background-color: #d7c9b9;
+}
+
+input:disabled {
+    cursor: not-allowed;
+    background-color: #f3f3f3 !important;
+}
+
+.ocultarInputs {
+    display: none;
+}
+
+/* CARD RESULTADOS FINALES */
+.check-custom {
+    font-size: 10pt;
+}
+
+.input-custom-resultado {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid 2px;
+    font-size: 10pt;
+    background-color: #d7c9b9;
+}
+
+.input-custom-resultado:disabled {
+    cursor: not-allowed;
+    background-color: #d7c9b9 !important;
+}
+
+.fijar-alto {
+    max-height: 1400px;
+}
+
+.fijar {
+    position: sticky;
+    top: 100px;
+}
+
+/* RESPONSIVE */
+@media(max-width:991px) {
+
+    .margen-contenido {
+        margin-left: 0;
+    }
+
+    .pie-pagina {
+        margin-left: 0;
+    }
+
+}
+

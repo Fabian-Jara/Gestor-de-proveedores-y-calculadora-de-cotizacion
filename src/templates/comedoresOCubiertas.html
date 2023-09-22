@@ -1,0 +1,294 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Calculadora Positano Normal {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menuLateral-2.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cardCalculos.css')}}">
+{% endblock %}
+
+{% block body %}
+<!-- cSpell:disable -->
+<style>
+    .link-comedores-cubiertas {
+        color: #b9aa95 !important;
+        font-weight: 700;
+    }
+</style>
+<!-- cSpell:enable -->
+
+<div class="margen-contenido">
+    <div class="container">
+        <!-- SECCIÓN TITULO PAGINA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-4 col-lg-5 col-md-5">
+                    <h2>Comedor o Cubierta</h2>
+                </div>
+                <div class="col-12 col-xl-8 col-lg-7 col-md-7">
+                    <hr>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA CALCULADORA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12 my-5">
+                    <div class="card card-custom shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-auto">
+                                    Ingresa los datos solicitados para hacer el calculo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Mármol y Agregados</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="largo" class="form-label">Ingresa el Largo</label>
+                                        <input type="number" class="form-control input-custom" id="largo"
+                                            placeholder="cm" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="ancho" class="form-label">Ingresa el Ancho</label>
+                                        <input type="number" class="form-control input-custom" id="ancho"
+                                            placeholder="cm" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroCuadrado" class="form-label">M²</label>
+                                        <input type="number" class="form-control input-custom" id="metroCuadrado"
+                                            placeholder="m²" oninput="calcularCoCu()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-4 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="metroLineal" class="form-label">Metro Lineal</label>
+                                        <input type="number" class="form-control input-custom" id="metroLineal"
+                                            placeholder="m" oninput="calcularCoCu()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="precioMarmol" class="form-label">Ingresa Tipo de mármol o
+                                            Cristal</label>
+                                        <select class="form-select input-custom" id="precioMarmol"
+                                            oninput="calcularCoCu()">
+                                            <option value="" disabled selected>elige una opción...</option>
+                                            <optgroup label="Cristal">
+                                                {% for cristal in cristales | sort(attribute='nombre_material_cristal') %}
+                                                <option value="{{ cristal.precio_cristal }}">{{
+                                                    cristal.nombre_material_cristal
+                                                    }} | {{ cristal.tipo_cristal }} | ${{ cristal.precio_cristal }}
+                                                </option>
+                                                {% endfor %}
+                                            </optgroup>
+                                            <!-- cSpell:disable -->
+                                            <optgroup label="Mármol">
+                                                {% for marmol in marmoles | sort(attribute='nombre_material_marmol') %}
+                                                <option value="{{ marmol.precio_marmol }}">
+                                                    {{ marmol.nombre_material_marmol }} | {{ marmol.tipo_marmol }} | ${{
+                                                    marmol.precio_marmol }}
+                                                </option>
+                                                {% endfor %}
+
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="costoCantos" class="form-label">Ingres presio Cantos</label>
+                                        <input type="number" class="form-control input-custom" id="costoCantos"
+                                            placeholder="$" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="costoMarmol" class="form-label">Costo Mármol</label>
+                                        <input class="form-control input-custom" id="costoMarmol" placeholder="$"
+                                            oninput="calcularCoCu()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="menoObra" class="form-label">Mano de Obra</label>
+                                        <input class="form-control input-custom" id="menoObra" placeholder="$"
+                                            oninput="calcularCoCu()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="costoArmado" class="form-label">Ingresa Costo Armado</label>
+                                        <input type="number" class="form-control input-custom" id="costoArmado"
+                                            placeholder="$" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="costoTraslado" class="form-label">Ingresa Costo Traslado</label>
+                                        <input type="number" class="form-control input-custom" id="costoTraslado"
+                                            placeholder="$" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6 ocultarInputs">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="totalCostoCubierta" class="form-label">Total Costo Cubierta</label>
+                                        <input class="form-control input-custom" id="totalCostoCubierta" placeholder="$"
+                                            oninput="calcularCoCu()" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="costoPatas" class="form-label">Ingresa Costo Patas</label>
+                                        <input type="number" class="form-control input-custom" id="costoPatas"
+                                            placeholder="$" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <hr>
+                                </div>
+                                <div class="col-auto">
+                                    <h5>Otros</h5>
+                                </div>
+                                <div class="col">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeGanancia" class="form-label">Ingresa Porcentaje
+                                            Ganancia</label>
+                                        <input type="number" class="form-control input-custom validarPorcentaje"
+                                            id="PorcentajeGanancia" value="55" placeholder="%" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="mb-3 text-xl-center text-sm-start">
+                                        <label for="PorcentajeCredito" class="form-label">Ingresa Porcentaje
+                                            Crédito</label>
+                                        <input type="number" class="form-control input-custom" id="PorcentajeCredito"
+                                            value="5" placeholder="%" oninput="calcularCoCu()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12 fijar-alto my-xl-5 my-lg-5 my-md-0 my-sm-0">
+                    <div class="card card-custom shadow fijar">
+                        <div class="card-header">
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col-12 col-xl-7 col-lg-12 col-md-9 col-sm-8">
+                                    Resultados Comedor o Cubierta
+                                </div>
+                                <div class="col-12 col-xl-5 col-lg-12 col-md-3 col-sm-4">
+                                    <div class="form-check form-switch check-custom">
+                                        <label class="form-check-label" for="showInputs">Ver Ocultos</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="showInputs"
+                                            onchange="mostrarInputs()">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="CosteNeto" class="form-label">Precio Coste Neto</label>
+                                        <input class="form-control input-custom-resultado" id="CosteNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="ganancia" class="form-label">Valor de Ganancia</label>
+                                        <input class="form-control input-custom-resultado" id="ganancia" placeholder="$"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioNeto" class="form-label">Precio del valor Neto</label>
+                                        <input class="form-control input-custom-resultado" id="precioNeto"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioContado" class="form-label">Precio valor Contado</label>
+                                        <input class="form-control input-custom-resultado" id="precioContado"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="precioCredito" class="form-label">Precio valor Crédito</label>
+                                        <input class="form-control input-custom-resultado" id="precioCredito"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="conRedondeo" class="form-label">Precio Redondeado</label>
+                                        <input class="form-control input-custom-resultado" id="conRedondeo"
+                                            placeholder="$" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/calcularCoCu.js')}}"></script>
+<script src="{{ url_for('static', filename='js/validarPorcentaje.js')}}"></script>
+<script src="{{ url_for('static', filename='js/habilitarInputs.js')}}"></script>
+{% endblock %}

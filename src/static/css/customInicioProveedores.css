@@ -1,0 +1,38 @@
+/* Estilos para la imagen */
+img {
+    border-radius: 20px;
+}
+
+/* ESTILOS PARA EL ACORDEON DE PROVEEDORES */
+.accordion-button {
+    font-size: 12pt;
+    height: 43px;
+}
+
+.accordion-button:focus {
+    border-color: #d9cfc4;
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: #d9cfc4;
+}
+
+.accordion p{
+    font-size: 11pt;
+}
+
+.accordion .btn{
+    font-size: 10pt;
+    width: 20%;
+}
+
+.accordion .btn:hover{
+    background-color: #bfa580;
+    border-color: #bfa580;
+}
+
+
+
+

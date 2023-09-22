@@ -1,0 +1,367 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Proveedor Mármol {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/crudProveedores.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menuLateral-1.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='DataTables/datatables.min.css')}}">
+{% endblock %}
+
+{% block body %}
+<!-- cSpell:disable -->
+<style>
+    .link-cristal {
+        color: #b9aa95 !important;
+        font-weight: 700;
+    }
+</style>
+<!-- cSpell:enable -->
+
+<!-- MODAL PARA EDITAR UN ARTICULO -->
+<div class="modal fade" id="modalEditCristal" tabindex="-1" aria-labelledby="modalEditCristalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title fuente-montserrat-negrita" id="modalEditCristalLabel">Edita todos los datos
+                    de la fila seleccionada</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- cSpell:disable -->
+            <form class="needs-validation fuente-montserrat-regular" action="/edit_cristal" method="POST" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3" hidden>
+                        <label for="edit_id" class="form-label">Id
+                            Cristal</label>
+                        <input type="hidden" class="form-control" id="edit_id" placeholder="#" name="id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_nombre_material_cristal" class="form-label">Nombre
+                            Cristal</label>
+                        <input type="text" class="form-control" id="edit_nombre_material_cristal" placeholder="Cristal"
+                            name="nombre_material_cristal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_nombre_proveedor_cristal" class="form-label">Nombre
+                            Proveedor</label>
+                        <input type="text" class="form-control" id="edit_nombre_proveedor_cristal"
+                            placeholder="Proveedor" name="nombre_proveedor_cristal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_tipo_cristal" class="form-label">Tipo</label>
+                        <select class="form-select" id="edit_tipo_cristal" name="tipo_cristal" required>
+                            <option value="" disabled selected>elige
+                                una
+                                opción...
+                            </option>
+                            <option value="6mm">6mm</option>
+                            <option value="8mm">8mm</option>
+                            <option value="10mm">10mm</option>
+                            <option value="12mm">12mm</option>
+                            <option value="15mm">15mm</option>
+                            <option value="19mm">19mm</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_precio_cristal" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="edit_precio_cristal" placeholder="$"
+                            name="precio_cristal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_estado_cristal" class="form-label">Disponibilidad</label>
+                        <select class="form-select" id="edit_estado_cristal" name="estado_cristal" required>
+                            <option value="" disabled selected>elige
+                                una
+                                opción...
+                            </option>
+                            <option value="1">Disponible</option>
+                            <option value="0">No disponible</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer bg-success">
+                    <button type="submit" class="btn btn-primary">Guardar cambios <i
+                            class="bi bi-file-earmark-diff-fill"></i></button>
+                </div>
+            </form>
+            <!-- cSpell:enable -->
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ELIMINAR UN ARTICULO -->
+<div class="modal fade" id="modalDeleteCristal" tabindex="-1" aria-labelledby="modalDeleteCristalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title fuente-montserrat-negrita" id="modalDeleteCristalLabel">Eliminar todos los
+                    datos de esta fila</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- cSpell:disable -->
+            <form class="needs-validation fuente-montserrat-regular" action="/delete_cristal" method="POST" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3" hidden>
+                        <label for="delete_id" class="form-label">Id
+                            Cristal</label>
+                        <input type="hidden" class="form-control" id="delete_id" placeholder="#" name="id" required>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col">
+                            <h2>¡ATENCIÓN!</h2>
+                            <h4>Esta apunto de eliminar los datos de
+                                la <br>
+                                fila:
+                                <b>"<span id="delete_id_spam"></span>"</b>.
+                            </h4>
+                            <i class="bi bi-exclamation-triangle text-danger" style="font-size: 30pt;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-danger">
+                    <button type="submit" class="btn btn-warning">Eliminar
+                        <i class="bi bi-file-earmark-excel-fill"></i>
+                    </button>
+                </div>
+            </form>
+            <!-- cSpell:enable -->
+        </div>
+    </div>
+</div>
+
+<div class="margen-contenido">
+    <div class="container">
+        <!-- SECCIÓN TITULO PAGINA -->
+        <section>
+            <div class="row">
+                <div class="col-12 col-xl-5 col-lg-5 col-md-5">
+                    <h2>Proveedores de Cristales</h2>
+                </div>
+                <div class="col-12 col-xl-7 col-lg-7 col-md-7">
+                    <hr>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA AGREGAR UN NUEVO ARTICULO DE CRISTAL Y MOSTRAR MENSAJE DE ALERTA -->
+        <section>
+            <div class="row align-items-center">
+                <div class="col-12 col-xl-5 col-lg-5 col-md-5 col-sm-12 my-5">
+                    <p>¿Desea agregar un nuevo artículo de proveedor?</p>
+                    <!-- cSpell:disable -->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-dark btn-custom shadow" data-bs-toggle="modal"
+                        data-bs-target="#modalAddCristal" data-toggle="tooltip" data-placement="bottom"
+                        title="Presiona para ''AGREGAR'' una nueva fila con los datos de precio de un proveedor">
+                        <!-- cSpell:enable -->
+                        Si. Agregar Nuevo
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalAddCristal" tabindex="-1" aria-labelledby="modalAddCristalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fuente-montserrat-negrita" id="modalAddCristalLabel">Agregar
+                                        nuevo articulo de proveedor</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <!-- cSpell:disable -->
+                                <form class="needs-validation fuente-montserrat-regular" action="/add_cristal"
+                                    method="POST" novalidate>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="nombreCristalAdd" class="form-label">Nombre Cristal</label>
+                                            <input type="text" class="form-control" id="nombreCristalAdd"
+                                                placeholder="Cristal" name="nombre_material_cristal" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nombreProveedorCristalAdd" class="form-label">Nombre
+                                                Proveedor</label>
+                                            <input type="text" class="form-control" id="nombreProveedorCristalAdd"
+                                                placeholder="Proveedor" name="nombre_proveedor_cristal" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tipoCristalAdd" class="form-label">Tipo</label>
+                                            <select class="form-select" id="tipoCristalAdd" name="tipo_cristal"
+                                                required>
+                                                <option value="" disabled selected>elige una opción...</option>
+                                                <option value="6mm">6mm</option>
+                                                <option value="8mm">8mm</option>
+                                                <option value="10mm">10mm</option>
+                                                <option value="12mm">12mm</option>
+                                                <option value="15mm">15mm</option>
+                                                <option value="19mm">19mm</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="precioCristalAdd" class="form-label">Precio</label>
+                                            <input type="number" class="form-control" id="precioCristalAdd"
+                                                placeholder="$" name="precio_cristal" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="EstadoCristalAdd" class="form-label">Disponibilidad</label>
+                                            <select class="form-select" id="EstadoCristalAdd" name="estado_cristal"
+                                                required>
+                                                <option value="" disabled selected>elige una opción...</option>
+                                                <option value="1">Disponible</option>
+                                                <option value="0">No disponible</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Guardar cambios <i
+                                                class="bi bi-file-earmark-diff-fill"></i></button>
+                                    </div>
+                                </form>
+                                <!-- cSpell:enable -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="col-12 col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-5">
+                    <div class="alert alert-primary col " role="alert">
+                        <div class="row">
+                            <div class="col-11">
+                                <strong class="">{{ message }}</strong>
+                            </div>
+
+                            <div class="col-1">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA LA TABLA DE DATOS -->
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card card-fondo-table table-container">
+                        <div class="card-body">
+                            <table class="table shadow table-striped table-hover" style="width: 100%;"
+                                id="table_proveedores">
+                                <div class="fijar-alto">
+                                    <thead class="fijar shadow" style="font-size: 12pt;">
+                                        <tr>
+                                            <th class="id-td" scope="col">#</th>
+                                            <th scope="col">Cristal</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Proveedor</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Ingreso</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </div>
+                                <tbody style="font-size: 10pt;">
+                                    <!-- cSpell:disable -->
+                                    {% if cristales %}
+                                    {% for cristal in cristales %}
+                                    <tr>
+                                        <th scope="row">{{ cristal.id }}</th>
+                                        <td>{{ cristal.nombre_material_cristal }}</td>
+                                        <td>{{ cristal.tipo_cristal }}</td>
+                                        <td>{{ cristal.nombre_proveedor_cristal }}</td>
+                                        <td>${{ cristal.precio_cristal }}</td>
+                                        <td>{{ cristal.fecha_insercion_cristal.strftime('%d-%m-%Y') }}</td>
+                                        <td>
+                                            {% if cristal.estado_cristal == 1 %}
+                                            <!-- cSpell:enable -->
+                                            Disponible
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" checked
+                                                    disabled>
+                                            </div>
+                                            {% else %}
+                                            No disponible
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" disabled>
+                                            </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <!-- cSpell:disable -->
+                                                    <button type="button" class="btn btn-outline-success btn-tabla"
+                                                        data-bs-toggle="modal" data-bs-target="#modalEditCristal"
+                                                        id="btnModalEditCristal" data-toggle="tooltip"
+                                                        data-placement="bottom"
+                                                        title="Presiona para ''EDITAR'' los datos de esta fila."
+                                                        data-edit_id="{{ cristal.id }}"
+                                                        data-edit_nombre_material_cristal="{{ cristal.nombre_material_cristal }}"
+                                                        data-edit_nombre_proveedor_cristal="{{ cristal.nombre_proveedor_cristal }}"
+                                                        data-edit_tipo_cristal="{{ cristal.tipo_cristal }}"
+                                                        data-edit_precio_cristal="{{ cristal.precio_cristal }}"
+                                                        data-edit_estado_cristal="{{ cristal.estado_cristal }}">
+                                                        <i class="bi bi-pen-fill"></i>
+                                                    </button>
+                                                    <!-- cSpell:enable -->
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <!-- cSpell:disable -->
+                                                    <button type="button" class="btn btn-outline-danger btn-tabla"
+                                                        data-bs-toggle="modal" data-bs-target="#modalDeleteCristal"
+                                                        id="btnmodalDeleteCristal" data-toggle="tooltip"
+                                                        data-placement="bottom"
+                                                        title="Presiona para ''ELIMINAR'' los datos de esta fila."
+                                                        data-delete_id="{{ cristal.id }}">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                    <!-- cSpell:enable -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+
+<!-- cSpell:disable -->
+<script src="{{ url_for('static', filename='DataTables/datatables.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/customDataTable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validarInputsForm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/datosModal.js') }}"></script>
+{% endblock %}

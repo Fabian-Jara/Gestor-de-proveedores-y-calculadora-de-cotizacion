@@ -1,0 +1,377 @@
+{% extends 'base-1.html' %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/customIndex.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <!-- MENSAJE DE BIENVENIDA -->
+    <section class="row justify-content-center align-items-center">
+        <div class="col-auto">
+            <div class="img-saludo">
+                <img class="img-fluid" src="{{ url_for('static', filename='img/bot_welcome.gif') }}" width="200"
+                    alt="botSaludos">
+            </div>
+        </div>
+        <div class="col-auto text-center">
+            <h1>Bienvenido Usuario</h1>
+            <h5>Disfruta de la automatización de calculadoras comerciales y la gestión de proveedores.</h5>
+        </div>
+    </section>
+    <hr>
+
+    <!-- PROVEEDORES -->
+    <section class="row justify-content-center align-items-center">
+        <!-- CARTA PARA INICIO PROVEEDORES -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('inicioProveedos') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/proveedores.jpg') }}"
+                                alt="Proveedores">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>PROVEEDORES</b></h5>
+                        <a href="{{ url_for('inicioProveedos') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- ACORDEÓN PARA LOS PROVEEDORES -->
+        <div class="col-12 col-xl-8 col-lg-7 col-sm-12">
+            <div class="accordion shadow" id="accordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false">
+                            Proveedores de Mármol
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Presenta una lista de empresas que ofrecen mármol como materia prima
+                                para la fabricación
+                                de diversos productos.</p>
+                            <a href="{{ url_for('proveedoMrarmol') }}" type="button"
+                                class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false">
+                            Proveedores de Cristal
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Muestra una selección de empresas que suministran cristales como
+                                material base para su uso en diferentes aplicaciones.</p>
+                            <a href="{{ url_for('proveedorCristal') }}" type="button"
+                                class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false">
+                            Proveedor Mano de obra Mármol
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Empresas que ofrecen servicios de fabricación de muebles y productos
+                                personalizados utilizando mármol como material principal.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false">
+                            Proveedor de Estructura Metálica
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Destaca empresas que se especializan en la creación y suministro de
+                                estructuras metálicas para diversas aplicaciones industriales y de construcción.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="false">
+                            Proveedor de Quemadores
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">presenta empresas que ofrecen quemadores de calidad y con
+                                certificación para su uso en
+                                chimeneas y sistemas de calefacción.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSix" aria-expanded="false">
+                            Proveedor de Traslado
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Destaca empresas que ofrecen servicios de transporte especializado
+                                para mudanzas y el
+                                traslado seguro de muebles y enseres domésticos.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSeven" aria-expanded="false">
+                            Proveedor de Alfombras
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p class="p-collapse">Empresas que ofrecen una variedad de opciones y servicios relacionados
+                                con alfombras,
+                                desde la venta hasta la instalación y el mantenimiento.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item" hidden>
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseEight" aria-expanded="false">
+                            Proveedor The Woods</b>
+                        </button>
+                    </h2>
+                    <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p>Ofrece una selección de productos relacionados con la madera y la naturaleza, desde
+                                muebles y decoración hasta elementos de construcción y accesorios para el hogar.</p>
+                            <a href="" type="button" class="btn btn-outline-dark bt-margen-collapse">
+                                IR
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULADORAS COMERCIALES -->
+    <section class="row my-5 text-center justify-content-center align-items-center">
+        <div class="col-12 col-xl-5 col-lg-5">
+            <h2>Calculadoras Comerciales</h2>
+        </div>
+        <div class="col-12 col-xl-7 col-lg-7">
+            <hr>
+        </div>
+    </section>
+
+    <section class="row justify-content-center align-items-center">
+        <!-- CARTA PARA POSITANO NORMAL-->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('positanoNormal') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/positanoNormal.png') }}"
+                                alt="Positano normal">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>POSITANO NORMAL</b></h5>
+                        <a href="{{ url_for('positanoNormal') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA POSITANO CRUZADA-->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('positanoCruzada') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/positanoCruzada.png') }}"
+                                alt="Positano cruzada">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>POSITANO CRUZADA</b></h5>
+                        <a href="{{ url_for('positanoCruzada') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA CUBOS O CHIMENEAS -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('cubosYChimeneas') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/cube.png') }}"
+                                alt="Cubos o Chimeneas">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>CUBOS O CHIMENEAS</b></h5>
+                        <a href="{{ url_for('cubosYChimeneas') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA CUBOS O REDONDAS -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('redondas') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/redondas.png') }}"
+                                alt="Redondas">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>REDONDAS</b></h5>
+                        <a href="{{ url_for('redondas') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA COMEDORES O CUBIERTAS -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="{{ url_for('comedoresOCubiertas') }}" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/comedores.png') }}"
+                                alt="Comedores o Cubiertas">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>COMEDORES O CUBIERTAS</b></h5>
+                        <a href="{{ url_for('comedoresOCubiertas') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA ARRIMO ARCO CERRADO -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4" hidden>
+            <a href="#" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/arcoCerrado.png') }}"
+                                alt="Arrimo arco cerrado">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>ARRIMO ARCO CERRADO</b></h5>
+                        <a href="#" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARTA PARA RABONA -->
+        <div class="col-auto col-xl-4 col-lg-5 col-sm-8 my-4">
+            <a href="#" class="carta">
+                <div class="card shadow mx-auto my-auto">
+                    <div class="card-body">
+                        <div class="contenedor-card-img text-center mx-auto my-auto">
+                            <img class="img-fluid" src="{{ url_for('static', filename='img/rabona.png') }}"
+                                alt="Arrimo arco cerrado">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="card-title"><b>RABONA</b></h5>
+                        <a href="{{ url_for('rabona') }}" type="button" class="btn btn-outline-light shadow">
+                            IR
+                            <i class="bi bi-arrow-right-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
